@@ -1,0 +1,13 @@
+{
+  "name": "creativestyle/magesuite-autocomplete",
+  "description": "Improved autocomplete with auto generation of suggestions",
+  "type": "magento2-module",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "MageSuite\\Autocomplete\\": ""
+    }
+  }
+}
