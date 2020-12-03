@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="MageSuite\ElasticSuiteAddons\Model\Product\Indexer\Fulltext\Datasource\AutocompleteData">
+        <arguments>
+            <argument name="attributeHelper" xsi:type="object">Smile\ElasticsuiteCatalog\Helper\ProductAttribute</argument>
+            <argument name="resourceModel" xsi:type="object">Smile\ElasticsuiteCatalog\Model\ResourceModel\Product\Indexer\Fulltext\Datasource\AttributeData</argument>
+        </arguments>
+    </type>
+
+    <type name="Smile\ElasticsuiteCore\Index\DataSourceResolver">
+        <arguments>
+            <argument name="datasources" xsi:type="array">
+                <item name="catalog_product" xsi:type="array">
+                    <item name="autocomplete_suggest" xsi:type="object">MageSuite\ElasticSuiteAddons\Model\Product\Indexer\Fulltext\Datasource\AutocompleteData</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
