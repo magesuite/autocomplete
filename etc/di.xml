@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="MageSuite\ElasticSuiteAddons\Model\Product\Indexer\Fulltext\Datasource\AutocompleteData">
+    <type name="MageSuite\Autocomplete\Model\Product\Indexer\Fulltext\Datasource\AutocompleteData">
         <arguments>
             <argument name="attributeHelper" xsi:type="object">Smile\ElasticsuiteCatalog\Helper\ProductAttribute</argument>
             <argument name="resourceModel" xsi:type="object">Smile\ElasticsuiteCatalog\Model\ResourceModel\Product\Indexer\Fulltext\Datasource\AttributeData</argument>
@@ -15,5 +15,10 @@
                 </item>
             </argument>
         </arguments>
+    </type>
+
+    <type name="Smile\ElasticsuiteCore\Index\Mapping">
+        <plugin name="set_analyser_for_autosuggest_field"
+                type="MageSuite\Autocomplete\Plugin\Smile\ElasticsuiteCore\Index\Mapping\SetAnalyserForAutosuggestField"/>
     </type>
 </config>

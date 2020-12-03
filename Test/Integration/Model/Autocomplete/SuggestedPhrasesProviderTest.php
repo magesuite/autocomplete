@@ -10,7 +10,7 @@ class SuggestedPhrasesProviderTest extends \PHPUnit\Framework\TestCase
     protected $objectManager;
 
     /**
-     * @var \MageSuite\ElasticSuiteAddons\Model\Autocomplete\SuggestedPhrasesProvider
+     * @var \MageSuite\Autocomplete\Model\Autocomplete\SuggestedPhrasesProvider
      */
     protected $suggestedPhrasesProvider;
 
@@ -18,7 +18,7 @@ class SuggestedPhrasesProviderTest extends \PHPUnit\Framework\TestCase
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 
-        $this->suggestedPhrasesProvider = $this->objectManager->create(\MageSuite\ElasticSuiteAddons\Model\Autocomplete\SuggestedPhrasesProvider::class);
+        $this->suggestedPhrasesProvider = $this->objectManager->create(\MageSuite\Autocomplete\Model\Autocomplete\SuggestedPhrasesProvider::class);
     }
 
     /**
