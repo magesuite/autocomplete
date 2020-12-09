@@ -13,7 +13,7 @@ $productsNames = include 'autocomplete_products_names.php';
 $iterator = 1;
 
 foreach($productsNames as $productName) {
-    $id = 555 + $iterator;
+    $productId = 555 + $iterator;
 
     $product = $objectManager->create(\Magento\Catalog\Model\Product::class);
     $product->load($productId);
@@ -26,4 +26,4 @@ foreach($productsNames as $productName) {
 }
 
 $registry->unregister('isSecureArea');
-$registry->register('isSecureArea', $currentArea);
+$registry->register('isSecureArea', false);

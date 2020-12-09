@@ -4,6 +4,10 @@ namespace MageSuite\Autocomplete\Model\Autocomplete;
 
 class SuggestedPhrasesProvider
 {
+    const AUTOCOMPLETE_FIELD = 'autocomplete_suggest';
+
+    protected $resultsCache = [];
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
@@ -39,13 +43,25 @@ class SuggestedPhrasesProvider
      */
     protected $esClient;
 
+    /**
+     * @var \MageSuite\Autocomplete\Api\Data\SuggestedPhraseInterfaceFactory
+     */
+    protected $suggestedPhraseFactory;
+
+    /**
+     * @var \Magento\Catalog\Model\Product\Visibility
+     */
+    protected $visibility;
+
     public function __construct(
         \Smile\ElasticsuiteCore\Search\Request\Builder $requestBuilder,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Smile\ElasticsuiteCore\Api\Client\ClientInterface $client,
         \Smile\ElasticsuiteCore\Search\Request\ContainerConfigurationFactory $containerConfigurationFactory,
         \Smile\ElasticsuiteCore\Api\Client\ClientConfigurationInterface $clientConfiguration,
-        \Smile\ElasticsuiteCore\Client\ClientBuilder $clientBuilder
+        \Smile\ElasticsuiteCore\Client\ClientBuilder $clientBuilder,
+        \MageSuite\Autocomplete\Api\Data\SuggestedPhraseInterfaceFactory $suggestedPhraseFactory,
+        \Magento\Catalog\Model\Product\Visibility $visibility
     )
     {
         $this->storeManager = $storeManager;
@@ -56,44 +72,43 @@ class SuggestedPhrasesProvider
         $this->clientBuilder = $clientBuilder;
 
         $this->esClient = $clientBuilder->build($clientConfiguration->getOptions());
+        $this->suggestedPhraseFactory = $suggestedPhraseFactory;
+        $this->visibility = $visibility;
     }
 
-    public function getSuggestions($phrase)
+    /**
+     * @param $prefix
+     * @return \MageSuite\Autocomplete\Api\Data\SuggestedPhraseInterface[]
+     */
+    public function getSuggestions($prefix)
     {
-        $params['index'] = $this->getIndexName();
-        $params['body']['_source'] = 'entity_id';
-        $params['body']['suggest'] = [
-            'autocomplete_suggest' => [
-                'prefix' => $phrase,
-                "completion" => [
-                    "field" => "autocomplete_suggest",
-                    "skip_duplicates" => true,
-                    "fuzzy" => [
-                        "fuzziness" => 0
-                    ]
-                ]
-            ]
-        ];
+        if(isset($this->resultsCache[$prefix])) {
+            return $this->resultsCache[$prefix];
+        }
 
-        $queryResponse = $this->client->search($params);
+        $phrases = $this->getPhrases($prefix);
 
-        if(!isset($queryResponse["suggest"]["autocomplete_suggest"][0]["options"])) {
+        if(empty($phrases)) {
+            $this->resultsCache[$prefix] = [];
             return [];
         }
 
-        $suggestions = [];
+        $counts = $this->getProductsCountForPhrases($phrases);
 
-        foreach($queryResponse["suggest"]["autocomplete_suggest"][0]["options"] as $suggestion) {
-            $suggestions[] = $suggestion['text'];
+        arsort($counts);
+
+        $suggestedPhrases = [];
+
+        foreach ($counts as $phrase => $productsCount) {
+            $suggestedPhrases[] = $this->suggestedPhraseFactory->create([
+                'phrase' => $phrase,
+                'productsCount' => $productsCount
+            ]);
         }
 
-        $start = microtime(true);
+        $this->resultsCache[$prefix] = $suggestedPhrases;
 
-        $counts = $this->getSuggestionsProductsCounts($suggestions);
-
-        echo ($start-microtime(true)).PHP_EOL;
-
-        return $suggestions;
+        return $suggestedPhrases;
     }
 
     public function getIndexName()
@@ -108,22 +123,30 @@ class SuggestedPhrasesProvider
         return $config->getIndexName();
     }
 
-    protected function getSuggestionsProductsCounts(array $suggestions)
+    protected function getProductsCountForPhrases(array $suggestions)
     {
         $params['body'] = [];
 
-        foreach($suggestions as $suggestion) {
+        foreach ($suggestions as $suggestion) {
             $params['body'][] = [
-                'index'=> $this->getIndexName()
+                'index' => $this->getIndexName()
             ];
 
             $params['body'][] = [
                 'query' => [
-                    'match' => [
-                        'autocomplete_suggest' => [
-                            'query' => $suggestion
+                    'bool' => [
+                        'must' => [
+                            'match' => [
+                                'spelling' => [
+                                    'query' => $suggestion
+                                ],
+                            ],
+                        ],
+                        'filter' => [
+                            ['term' => ['stock.is_in_stock' => true]],
+                            ['terms' => ['visibility' => $this->visibility->getVisibleInSearchIds()]]
                         ]
-                    ]
+                    ],
                 ],
             ];
         }
@@ -134,8 +157,8 @@ class SuggestedPhrasesProvider
 
         $results = [];
 
-        foreach($suggestions as $suggestion) {
-            if(isset($counts['responses'][$resultIterator]['hits']['total'])) {
+        foreach ($suggestions as $suggestion) {
+            if (isset($counts['responses'][$resultIterator]['hits']['total'])) {
                 $results[$suggestion] = $counts['responses'][$resultIterator]['hits']['total'];
             }
 
@@ -143,5 +166,36 @@ class SuggestedPhrasesProvider
         }
 
         return $results;
+    }
+
+    protected function getPhrases($prefix) {
+        $params['index'] = $this->getIndexName();
+        $params['body']['_source'] = 'entity_id';
+        $params['body']['suggest'] = [
+            self::AUTOCOMPLETE_FIELD => [
+                'prefix' => $prefix,
+                "completion" => [
+                    "field" => self::AUTOCOMPLETE_FIELD,
+                    "skip_duplicates" => true,
+                    "fuzzy" => [
+                        "fuzziness" => 0
+                    ]
+                ]
+            ]
+        ];
+
+        $queryResponse = $this->client->search($params);
+
+        if (!isset($queryResponse["suggest"][self::AUTOCOMPLETE_FIELD][0]["options"])) {
+            return [];
+        }
+
+        $phrases = [];
+
+        foreach ($queryResponse["suggest"][self::AUTOCOMPLETE_FIELD][0]["options"] as $suggestion) {
+            $phrases[] = $suggestion['text'];
+        }
+
+        return $phrases;
     }
 }

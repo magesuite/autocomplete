@@ -1,0 +1,10 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <smile_elasticsuite_autocomplete_settings>
+            <term_autocomplete>
+                <generate_terms>1</generate_terms>
+                <bold_searched_text_in_results>1</bold_searched_text_in_results>
+            </term_autocomplete>
+        </smile_elasticsuite_autocomplete_settings>
+    </default>
+</config>
