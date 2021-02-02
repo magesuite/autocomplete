@@ -22,7 +22,7 @@ interface SuggestedPhraseInterface
 
     /**
      * @param $productsCount
-     * @return int
+     * @return self
      */
     public function setProductsCount($productsCount);
 }
