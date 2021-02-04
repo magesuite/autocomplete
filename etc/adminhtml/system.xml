@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="smile_elasticsuite_autocomplete_settings" translate="label" type="text" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Autocomplete</label>
+            <tab>smile_elasticsuite</tab>
+            <resource>Magento_Backend::smile_elasticsuite_autocomplete</resource>
+            <group id="term_autocomplete" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="generate_terms" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <label>Generate terms</label>
+                    <comment><![CDATA[Along with terms coming from search history, additional terms will be generated automatically based on products names. Terms will be merged with search history based ones based on returned products count.]]></comment>
+                </field>
+                <field id="bold_searched_text_in_results" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <label>Bold searched text in results</label>
+                    <comment><![CDATA[When enabled searched text will be bolded on results list]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
