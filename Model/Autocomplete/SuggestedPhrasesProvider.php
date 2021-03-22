@@ -82,13 +82,13 @@ class SuggestedPhrasesProvider
      */
     public function getSuggestions($prefix)
     {
-        if(isset($this->resultsCache[$prefix])) {
+        if (isset($this->resultsCache[$prefix])) {
             return $this->resultsCache[$prefix];
         }
 
         $phrases = $this->getPhrases($prefix);
 
-        if(empty($phrases)) {
+        if (empty($phrases)) {
             $this->resultsCache[$prefix] = [];
             return [];
         }
@@ -100,6 +100,10 @@ class SuggestedPhrasesProvider
         $suggestedPhrases = [];
 
         foreach ($counts as $phrase => $productsCount) {
+            if (is_array($productsCount)) {
+                $productsCount = $productsCount['value'];
+            }
+
             $suggestedPhrases[] = $this->suggestedPhraseFactory->create([
                 'phrase' => $phrase,
                 'productsCount' => $productsCount
