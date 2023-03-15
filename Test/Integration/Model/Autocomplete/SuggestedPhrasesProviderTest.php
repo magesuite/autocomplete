@@ -24,7 +24,7 @@ class SuggestedPhrasesProviderTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadAutocompleteProducts
+     * @magentoDataFixture MageSuite_Autocomplete::Test/Integration/_files/autocomplete_products.php
      */
     public function testItReturnsCorrectAutocompletionPhrasesSortedByProductsCount()
     {
@@ -42,13 +42,5 @@ class SuggestedPhrasesProviderTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($expectedPhrase, $suggestedPhrase->getPhrase());
             $this->assertEquals($expectedCount, $suggestedPhrase->getProductsCount());
         }
-    }
-
-    public static function loadAutocompleteProducts() {
-        include __DIR__.'/../../_files/autocomplete_products.php';
-    }
-
-    public static function loadAutocompleteProductsRollback() {
-        include __DIR__.'/../../_files/autocomplete_products_rollback.php';
     }
 }

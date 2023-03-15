@@ -28,3 +28,7 @@ foreach($productsNames as $productName) {
 
     $iterator++;
 }
+
+$indexer = $objectManager->get(\Magento\Framework\Indexer\IndexerInterface::class);
+$indexer->load('catalogsearch_fulltext')
+    ->reindexAll();
