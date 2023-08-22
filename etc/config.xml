@@ -6,5 +6,11 @@
                 <bold_searched_text_in_results>1</bold_searched_text_in_results>
             </term_autocomplete>
         </smile_elasticsuite_autocomplete_settings>
+        <catalog>
+            <search>
+                <top_search_result_cache_enabled>1</top_search_result_cache_enabled>
+                <top_search_result_cache_ttl>3600</top_search_result_cache_ttl>
+            </search>
+        </catalog>
     </default>
 </config>

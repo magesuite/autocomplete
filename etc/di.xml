@@ -36,4 +36,9 @@
                 sortOrder="20"
         />
     </type>
+
+    <type name="Magento\Search\Model\ResourceModel\Query\Collection">
+        <plugin name="cache_is_top_search_result"
+                type="MageSuite\Autocomplete\Plugin\Search\Model\ResourceModel\Query\Collection\GetFromCacheIsTopSearchResult"/>
+    </type>
 </config>
