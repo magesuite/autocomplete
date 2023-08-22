@@ -18,5 +18,24 @@
                 </field>
             </group>
         </section>
+        <section id="catalog">
+            <group id="search">
+                <field id="top_search_result_cache_enabled" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Top Search Result Cache's Lifetime</label>
+                    <frontend_class>cs-csfeature__logo</frontend_class>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>This value used to define the lifetime (TTL in seconds) for the cache expiration of a collection of the top 100 search phrases.</comment>
+                </field>
+                <field id="top_search_result_cache_ttl" translate="label comment" type="text" sortOrder="31" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Top Search Result Cache's Lifetime</label>
+                    <frontend_class>cs-csfeature__logo</frontend_class>
+                    <validate>validate-digits</validate>
+                    <depends>
+                        <field id="top_search_result_cache_enabled">1</field>
+                    </depends>
+                    <comment>This value used to define the lifetime (TTL in seconds) for the cache expiration of a collection of the top 100 search phrases.</comment>
+                </field>
+            </group>
+        </section>
     </system>
 </config>
