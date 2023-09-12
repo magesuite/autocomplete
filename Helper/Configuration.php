@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Autocomplete\Helper;
 
 class Configuration
@@ -18,21 +20,21 @@ class Configuration
 
     public function isGenerationEnabled(): bool
     {
-        return $this->scopeConfig->isSetFlag(self::GENERATION_ENABLED_XML_PATH);
+        return (bool) $this->scopeConfig->isSetFlag(self::GENERATION_ENABLED_XML_PATH);
     }
 
-    public function isBoldingOfSearchQueryEnabled(): mixed
+    public function isBoldingOfSearchQueryEnabled(): bool
     {
-        return $this->scopeConfig->getValue(self::BOLD_SEARCHED_TEXT_IN_RESULTS_ENABLED_XML_PATH);
+        return (bool) $this->scopeConfig->getValue(self::BOLD_SEARCHED_TEXT_IN_RESULTS_ENABLED_XML_PATH);
     }
 
     public function isEnabledTopSearchResultCache(): bool
     {
-        return $this->scopeConfig->isSetFlag(self::TOP_SEARCH_RESULT_CACHE_ENABLED_XML_PATH);
+        return (bool) $this->scopeConfig->isSetFlag(self::TOP_SEARCH_RESULT_CACHE_ENABLED_XML_PATH);
     }
 
-    public function getTopSearchResultCacheTTL(): mixed
+    public function getTopSearchResultCacheTTL(): int
     {
-        return $this->scopeConfig->getValue(self::TOP_SEARCH_RESULT_CACHE_TTL_XML_PATH);
+        return (int) $this->scopeConfig->getValue(self::TOP_SEARCH_RESULT_CACHE_TTL_XML_PATH);
     }
 }
