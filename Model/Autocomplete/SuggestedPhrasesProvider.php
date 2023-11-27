@@ -62,8 +62,7 @@ class SuggestedPhrasesProvider
         \Smile\ElasticsuiteCore\Client\ClientBuilder $clientBuilder,
         \MageSuite\Autocomplete\Api\Data\SuggestedPhraseInterfaceFactory $suggestedPhraseFactory,
         \Magento\Catalog\Model\Product\Visibility $visibility
-    )
-    {
+    ) {
         $this->storeManager = $storeManager;
         $this->requestBuilder = $requestBuilder;
         $this->client = $client;
@@ -172,7 +171,8 @@ class SuggestedPhrasesProvider
         return $results;
     }
 
-    protected function getPhrases($prefix) {
+    protected function getPhrases($prefix)
+    {
         $params['index'] = $this->getIndexName();
         $params['body']['_source'] = 'entity_id';
         $params['body']['suggest'] = [

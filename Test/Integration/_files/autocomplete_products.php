@@ -6,13 +6,13 @@ $productsNames = include 'autocomplete_products_names.php';
 
 $iterator = 1;
 
-foreach($productsNames as $productName) {
+foreach ($productsNames as $productName) {
     $product = $objectManager->create(\Magento\Catalog\Model\Product::class);
     $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
-        ->setId(555+$iterator)
+        ->setId(555 + $iterator)
         ->setAttributeSetId(4)
         ->setName($productName)
-        ->setSku('autocomplete_'.$iterator)
+        ->setSku('autocomplete_' . $iterator)
         ->setPrice(10)
         ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
         ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)

@@ -8,8 +8,9 @@ namespace MageSuite\Autocomplete\Plugin\Smile\ElasticsuiteCore\Index\Mapping;
  */
 class SetAnalyserForAutosuggestField
 {
-    public function afterGetProperties(\Smile\ElasticsuiteCore\Index\Mapping $subject, $result) {
-        if(isset($result['autocomplete_suggest'])) {
+    public function afterGetProperties(\Smile\ElasticsuiteCore\Index\Mapping $subject, $result)
+    {
+        if (isset($result['autocomplete_suggest'])) {
             $result['autocomplete_suggest']['analyzer'] = 'standard';
             $result['autocomplete_suggest']['search_analyzer'] = 'standard';
         }

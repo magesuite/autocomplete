@@ -12,7 +12,7 @@ $productsNames = include 'autocomplete_products_names.php';
 
 $iterator = 1;
 
-foreach($productsNames as $productName) {
+foreach ($productsNames as $productName) {
     $productId = 555 + $iterator;
 
     $product = $objectManager->create(\Magento\Catalog\Model\Product::class);

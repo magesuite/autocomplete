@@ -60,7 +60,8 @@ class SuggestedPhrase implements \MageSuite\Autocomplete\Api\Data\SuggestedPhras
         return $this;
     }
 
-    public function toString() {
+    public function toString()
+    {
         return sprintf('%s:%s', $this->getPhrase(), $this->getProductsCount());
     }
 }
