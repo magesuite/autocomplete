@@ -35,7 +35,7 @@ class SuggestedPhrasesProviderTest extends \PHPUnit\Framework\TestCase
             'Joga' => 2
         ];
 
-        foreach($expectedPhrases as $expectedPhrase => $expectedCount) {
+        foreach ($expectedPhrases as $expectedPhrase => $expectedCount) {
             /** @var \MageSuite\Autocomplete\Api\Data\SuggestedPhraseInterface $suggestedPhrase */
             $suggestedPhrase = array_shift($suggestedPhrases);
 

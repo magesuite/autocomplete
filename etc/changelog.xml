@@ -4,12 +4,19 @@
         name="MageSuite_Autocomplete"
         url="https://github.com/magesuite/autocomplete">
         <changelog>
-            <tag version="v1.1.1" date="2023-08-08">
+            <tag version="1.1.1" date="2023-08-08">
                 <entry>
-                    <type>FEAT</type>
+                    <type>FEATURE</type>
                     <overview>Performance improvement for getting top search result collection</overview>
                     <ticket_id>IPET-2152</ticket_id>
                     <doc_reference>IPET-2152-search-top-result-ttl</doc_reference>
+                </entry>
+            </tag>
+            <tag version="1.1.2" date="2023-11-24">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Fixing issue when result in autocomplete are duplicated because `bold_searched_text_in_results` is enabled</overview>
+                    <ticket_id>IPET-2113</ticket_id>
                 </entry>
             </tag>
         </changelog>

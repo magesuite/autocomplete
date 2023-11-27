@@ -9,11 +9,13 @@
                 <field id="generate_terms" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <label>Generate terms</label>
+                    <frontend_class>cs-csfeature__logo</frontend_class>
                     <comment><![CDATA[Along with terms coming from search history, additional terms will be generated automatically based on products names. Terms will be merged with search history based ones based on returned products count.]]></comment>
                 </field>
                 <field id="bold_searched_text_in_results" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <label>Bold searched text in results</label>
+                    <frontend_class>cs-csfeature__logo</frontend_class>
                     <comment><![CDATA[When enabled searched text will be bolded on results list]]></comment>
                 </field>
             </group>

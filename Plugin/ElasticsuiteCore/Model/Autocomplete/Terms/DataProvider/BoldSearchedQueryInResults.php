@@ -4,27 +4,20 @@ namespace MageSuite\Autocomplete\Plugin\ElasticsuiteCore\Model\Autocomplete\Term
 
 class BoldSearchedQueryInResults
 {
-    /**
-     * @var \Magento\Search\Model\QueryFactory
-     */
-    protected $queryFactory;
-
-    /**
-     * @var \MageSuite\Autocomplete\Helper\Configuration
-     */
-    protected $configuration;
+    protected \Magento\Search\Model\QueryFactory $queryFactory;
+    protected \MageSuite\Autocomplete\Helper\Configuration $configuration;
 
     public function __construct(
         \Magento\Search\Model\QueryFactory $queryFactory,
         \MageSuite\Autocomplete\Helper\Configuration $configuration
-    )
-    {
+    ) {
         $this->queryFactory = $queryFactory;
         $this->configuration = $configuration;
     }
 
-    public function afterGetItems(\Smile\ElasticsuiteCore\Model\Autocomplete\Terms\DataProvider $subject, $result) {
-        if(!$this->configuration->isBoldingOfSearchQueryEnabled()) {
+    public function afterGetItems(\Smile\ElasticsuiteCore\Model\Autocomplete\Terms\DataProvider $subject, $result)
+    {
+        if (!$this->configuration->isBoldingOfSearchQueryEnabled()) {
             return $result;
         }
 
@@ -37,20 +30,20 @@ class BoldSearchedQueryInResults
 
     protected function boldSearchedQuery($queryText, array $result)
     {
-        if(empty($result)) {
+        if (empty($result)) {
             return $result;
         }
 
-        foreach($result as $term) {
-            if(strpos($term->getTitle(), '<strong>') !== false) {
+        foreach ($result as $term) {
+            if (strpos($term->getTitle(), '<strong>') !== false) {
                 continue;
             }
 
             $regularExpression = sprintf('/%s/i', preg_quote($queryText, '/'));
 
-            $boldedTitle = @preg_replace($regularExpression, '<strong>$0</strong>', $term->getTitle());
+            $boldedTitle = @preg_replace($regularExpression, '<strong>$0</strong>', $term->getTitle()); //phpcs:ignore
 
-            if(empty($boldedTitle)) {
+            if (empty($boldedTitle)) {
                 continue;
             }
 
@@ -59,6 +52,4 @@ class BoldSearchedQueryInResults
 
         return $result;
     }
-
-
 }
