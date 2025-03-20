@@ -178,12 +178,9 @@ class SuggestedPhrasesProvider
         $params['body']['suggest'] = [
             self::AUTOCOMPLETE_FIELD => [
                 'prefix' => $prefix,
-                "completion" => [
-                    "field" => self::AUTOCOMPLETE_FIELD,
-                    "skip_duplicates" => true,
-                    "fuzzy" => [
-                        "fuzziness" => 0
-                    ]
+                'completion' => [
+                    'field' => self::AUTOCOMPLETE_FIELD,
+                    'skip_duplicates' => true
                 ]
             ]
         ];
