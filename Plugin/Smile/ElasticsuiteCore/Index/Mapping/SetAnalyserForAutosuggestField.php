@@ -10,9 +10,9 @@ class SetAnalyserForAutosuggestField
 {
     public function afterGetProperties(\Smile\ElasticsuiteCore\Index\Mapping $subject, $result)
     {
-        if (isset($result['autocomplete_suggest'])) {
-            $result['autocomplete_suggest']['analyzer'] = 'standard';
-            $result['autocomplete_suggest']['search_analyzer'] = 'standard';
+        if (isset($result[\MageSuite\Autocomplete\Model\Autocomplete\SuggestedPhrasesProvider::AUTOCOMPLETE_FIELD])) {
+            $result[\MageSuite\Autocomplete\Model\Autocomplete\SuggestedPhrasesProvider::AUTOCOMPLETE_FIELD]['analyzer'] = 'standard';
+            $result[\MageSuite\Autocomplete\Model\Autocomplete\SuggestedPhrasesProvider::AUTOCOMPLETE_FIELD]['search_analyzer'] = 'standard';
         }
 
         return $result;
