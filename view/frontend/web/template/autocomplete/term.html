@@ -1,10 +1,12 @@
 <!--
 /**
-Templates is overwritten in order to use <%= instead of <%- for data.title to allow bolding of searched phrase inside
-returned terms
+ * Template is overwritten in order to:
+ * - use <%= instead of <%- for data.title to allow bolding of searched phrase inside returned terms
+ * - remove incorrect `role="option"` attribute
+ * Aligned with Smile_ElasticsuiteCore in 06/2025
 */
 -->
-<dd class="<%- data.row_class %>" id="qs-option-<%- data.index %>" role="option">
+<dd class="<%- data.row_class %>" id="qs-option-<%- data.index %>">
     <span class="qs-option-name"><%= data.title %></span>
     <span aria-hidden="true" class="amount"><%- data.num_results %></span>
 </dd>
