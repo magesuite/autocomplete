@@ -5,11 +5,13 @@ $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 $productsNames = include 'autocomplete_products_names.php';
 
 $iterator = 1;
+$productIds = [];
 
 foreach ($productsNames as $productName) {
+    $productId = 555 + $iterator;
     $product = $objectManager->create(\Magento\Catalog\Model\Product::class);
     $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
-        ->setId(555 + $iterator)
+        ->setId($productId)
         ->setAttributeSetId(4)
         ->setName($productName)
         ->setSku('autocomplete_' . $iterator)
@@ -25,10 +27,10 @@ foreach ($productsNames as $productName) {
 
     $product->reindex();
     $product->priceReindexCallback();
-
+    $productIds[] = $productId;
     $iterator++;
 }
 
 $indexer = $objectManager->get(\Magento\Framework\Indexer\IndexerInterface::class);
 $indexer->load('catalogsearch_fulltext')
-    ->reindexAll();
+    ->reindexList($productIds);
